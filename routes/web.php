@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/migrate', function () {
-    Artisan::call('migrate');
+    Artisan::call('migrate:fresh');
     return 'migrate sukses';
 });
 
