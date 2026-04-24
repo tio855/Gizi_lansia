@@ -4,6 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PrediksiController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return 'migrate sukses';
+});
 
 // Halaman Awal
 Route::get('/', function () {
