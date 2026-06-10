@@ -30,9 +30,14 @@
                 </div>
             </div>
 
-            <a href="/logout" class="bg-red-50 hover:bg-red-500 p-3 rounded-2xl group transition-all">
-                <i class="fa-solid fa-power-off text-red-500 group-hover:text-white transition-colors"></i>
-            </a>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                class="bg-red-50 hover:bg-red-500 p-3 rounded-2xl group transition-all">
+                    <i class="fa-solid fa-power-off text-red-500 group-hover:text-white transition-colors"></i>
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                    @csrf
+                </form>
         </div>
     </nav>
 
@@ -41,35 +46,71 @@
             <div class="bg-white p-2 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-x-auto no-scrollbar">
                 <div class="flex items-center space-x-1 min-w-max">
 
-                    <a href="/dashboard" class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all {{ request()->is('dashboard') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
+                    <!-- DASHBOARD (SEMUA ROLE) -->
+                    <a href="/dashboard"
+                    class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all
+                    {{ request()->is('dashboard') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
                         <i class="fa-solid fa-house-chimney text-xs"></i>
                         <span class="text-sm">Beranda</span>
                     </a>
 
-                    <a href="/klasifikasi" class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all {{ request()->is('klasifikasi') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
-                        <i class="fa-solid fa-stethoscope text-xs"></i>
-                        <span class="text-sm">Cek Gizi</span>
-                    </a>
+                    {{-- ================= ADMIN ================= --}}
+                    @if(auth()->check() && auth()->user()->role == 'admin')
 
-                    <a href="/penjelasan-lansia" class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all {{ request()->is('penjelasan-lansia') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
-                        <i class="fa-solid fa-person-cane text-xs"></i>
-                        <span class="text-sm">Tentang Lansia</span>
-                    </a>
+                        <a href="/admin/riwayat"
+                        class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all
+                        {{ request()->is('admin/riwayat') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
+                            <i class="fa-solid fa-database text-xs"></i>
+                            <span class="text-sm">Kelola Riwayat</span>
+                        </a>
 
-                    <a href="/penjelasan-gizi" class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all {{ request()->is('penjelasan-gizi') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
-                        <i class="fa-solid fa-apple-whole text-xs"></i>
-                        <span class="text-sm">Info Gizi</span>
-                    </a>
+                        <a href="/admin/users"
+                        class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all
+                        {{ request()->is('admin/users') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
+                            <i class="fa-solid fa-users text-xs"></i>
+                            <span class="text-sm">Kelola User</span>
+                        </a>
 
-                    <a href="/cara-penggunaan" class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all {{ request()->is('cara-penggunaan') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
-                        <i class="fa-solid fa-book-open-reader text-xs"></i>
-                        <span class="text-sm">Panduan</span>
-                    </a>
+                    {{-- ================= USER ================= --}}
+                    @else
 
-                    <a href="/riwayat" class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all {{ request()->is('riwayat') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
-                        <i class="fa-solid fa-clock-rotate-left text-xs"></i>
-                        <span class="text-sm">Riwayat</span>
-                    </a>
+                        <a href="/klasifikasi"
+                        class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all
+                        {{ request()->is('klasifikasi') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
+                            <i class="fa-solid fa-stethoscope text-xs"></i>
+                            <span class="text-sm">Cek Gizi</span>
+                        </a>
+
+                        <a href="/penjelasan-lansia"
+                        class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all
+                        {{ request()->is('penjelasan-lansia') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
+                            <i class="fa-solid fa-person-cane text-xs"></i>
+                            <span class="text-sm">Lansia</span>
+                        </a>
+
+                        <a href="/penjelasan-gizi"
+                        class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all
+                        {{ request()->is('penjelasan-gizi') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
+                            <i class="fa-solid fa-apple-whole text-xs"></i>
+                            <span class="text-sm">Gizi Lansia</span>
+                        </a>
+
+                        <a href="/cara-penggunaan"
+                        class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all
+                        {{ request()->is('cara-penggunaan') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
+                            <i class="fa-solid fa-book-open-reader text-xs"></i>
+                            <span class="text-sm">Panduan</span>
+                        </a>
+
+                        <a href="/riwayat"
+                        class="flex items-center space-x-2 px-5 py-3 rounded-2xl transition-all
+                        {{ request()->is('riwayat') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold' : 'text-slate-500 hover:bg-slate-50' }}">
+                            <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+                            <span class="text-sm">Riwayat</span>
+                        </a>
+
+                    @endif
+
                 </div>
             </div>
         </div>
@@ -98,14 +139,7 @@
 
             <!-- Menu -->
             <div class="text-sm">
-                <h4 class="font-bold mb-3">Menu</h4>
-                <ul class="space-y-2 text-blue-100">
-                    <li><a href="/dashboard" class="hover:text-white">Beranda</a></li>
-                    <li><a href="/klasifikasi" class="hover:text-white">Cek Gizi</a></li>
-                    <li><a href="/penjelasan-gizi" class="hover:text-white">Info Gizi</a></li>
-                    <li><a href="/cara-penggunaan" class="hover:text-white">Panduan</a></li>
-                    <li><a href="/riwayat" class="hover:text-white">Riwayat</a></li>
-                </ul>
+
             </div>
 
             <!-- Icon / Sosial -->

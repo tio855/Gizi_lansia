@@ -12,8 +12,7 @@
 
     <div class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
         <div class="bg-emerald-600 p-8 text-center text-white">
-            <h2 class="text-3xl font-bold">Buat Akun</h2>
-            <p class="text-emerald-100 mt-2">Daftar sebagai Kader/Petugas Medis</p>
+            <h2 class="text-3xl font-bold">Registrasi</h2>
         </div>
 
         <div class="p-8">

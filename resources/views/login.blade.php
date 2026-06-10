@@ -22,15 +22,35 @@
             <h2 class="text-3xl font-bold">Selamat Datang</h2>
             <p class="text-blue-100 mt-2">Sistem Klasifikasi Gizi Lansia</p>
         </div>
-
         <div class="p-8">
-            <form method="POST" action="/login" class="space-y-6">
-                @csrf
+
+        @if(session('error'))
+        <div id="errorAlert"
+            class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-xl">
+            {{ session('error') }}
+        </div>
+
+        <script>
+        setTimeout(() => {
+            const alert = document.getElementById('errorAlert');
+            if(alert){
+                alert.remove();
+            }
+        }, 3000);
+        </script>
+        @endif
+
+        <form method="POST" action="/login" class="space-y-6">
+            @csrf
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-                    <input type="email" name="email" placeholder="nama@email.com"
-                        class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all" required>
+                    <input type="email"
+                        name="email"
+                        value="{{ old('email') }}"
+                        placeholder="nama@email.com"
+                        class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                        required>
                 </div>
 
                 <div>

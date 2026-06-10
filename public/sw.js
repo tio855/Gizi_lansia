@@ -43,7 +43,7 @@ const returnFromCache = function (request) {
     return caches.open("offline").then(function (cache) {
         return cache.match(request).then(function (matching) {
             if (!matching || matching.status === 404) {
-                return cache.match("offline.html");
+                return cache.match("/offline.html");
             } else {
                 return matching;
             }
@@ -55,7 +55,7 @@ self.addEventListener("fetch", function (event) {
     event.respondWith(checkResponse(event.request).catch(function () {
         return returnFromCache(event.request);
     }));
-    if(!event.request.url.startsWith('http')){
+    if(event.request.url.startsWith('http')){
         event.waitUntil(addToCache(event.request));
     }
 });

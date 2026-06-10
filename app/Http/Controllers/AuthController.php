@@ -14,19 +14,26 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function login(Request $request){
+    public function showRegister(){
+        return view('register');
+    }
 
+    public function login(Request $request)
+    {
         $data = $request->only('email','password');
 
         if(Auth::attempt($data)){
+
+            if(Auth::user()->role == 'admin'){
+                return redirect('/dashboard');
+            }
+
             return redirect('/dashboard');
         }
 
-        return back()->with('error','Email atau password salah');
-    }
-
-    public function showRegister(){
-        return view('register');
+        return back()
+                ->with('error','Email atau password salah')
+                ->withInput();
     }
 
     public function register(Request $request){
@@ -34,7 +41,8 @@ class AuthController extends Controller
         User::create([
             'name'=>$request->name,
             'email'=>$request->email,
-            'password'=>Hash::make($request->password)
+            'password'=>Hash::make($request->password),
+            'role'=>'user'
         ]);
 
         return redirect('/login');

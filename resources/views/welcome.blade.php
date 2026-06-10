@@ -76,17 +76,6 @@
                         Daftar Akun Baru
                     </a>
                 </div>
-
-                <div class="mt-10 pt-8 border-t border-slate-50 flex flex-col items-center">
-                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.3em] mb-4">
-                        Powered By Smart Analysis
-                    </p>
-                    <div class="flex gap-4 opacity-30 grayscale">
-                        <i class="fa-solid fa-brain text-2xl"></i>
-                        <i class="fa-solid fa-microscope text-2xl"></i>
-                        <i class="fa-solid fa-dna text-2xl"></i>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
